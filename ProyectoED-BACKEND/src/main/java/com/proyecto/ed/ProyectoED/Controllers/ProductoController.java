@@ -19,16 +19,16 @@ public class ProductoController {
     }
 
     @GetMapping("/{id}")
-    Producto listarPorId(Long id){
+    Producto listarPorId(@PathVariable  Long id){
         return productoService.listarPorId(id);
     }
     @GetMapping("/categoria/{categoriaId}")
-    List<Producto> listarPorCategoria(Long categoriaId){
+    List<Producto> listarPorCategoria(@PathVariable Long categoriaId){
         return productoService.listarPorCategoria(categoriaId);
     }
 
     @PostMapping
-    void guardarProducto(Producto producto){
+    void guardarProducto(@RequestBody Producto producto){
         productoService.guardarProducto(producto);
     }
 

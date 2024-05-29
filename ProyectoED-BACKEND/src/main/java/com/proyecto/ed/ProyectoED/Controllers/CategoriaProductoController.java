@@ -22,7 +22,7 @@ public class CategoriaProductoController {
 
 
     @PostMapping
-    public void guardarCategoria(CategoriaProducto categoriaProducto){
+    public void guardarCategoria(@RequestBody  CategoriaProducto categoriaProducto){
         categoriaProductosService.guardarCategoria(categoriaProducto);
     }
     @PutMapping
