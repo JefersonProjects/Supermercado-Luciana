@@ -28,5 +28,6 @@ public class Compras {
     @Column(name ="total")
     private Double total;
 
+    @OneToMany
     private List<ComprasProductos> productos;
 }
