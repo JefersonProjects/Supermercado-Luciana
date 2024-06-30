@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <title>Frameworks</title>
+</head>
+<body>
+  <Div th:each="item : ${items}">
+      <span th:text="${item}">Frameworks</span>
+  </Div>
+</body>
+</html>
