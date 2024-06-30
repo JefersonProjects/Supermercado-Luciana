@@ -1,0 +1,274 @@
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+    /* ocultamos carito de compras y modo admin */
+    .carrito {
+        display: none;
+    }
+
+/* CARGAR DEBAJO DEL HEADER */
+.main-content {
+    margin-top: 85px;
+}
+
+/* Encabezado y navegación */
+.header-luciana {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    height: 85px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 0;
+}
+
+.nav-luciana {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    width: 100%;
+}
+
+.nav-link-luciana {
+    color: white;
+    text-decoration: none;
+    align-items: center;
+    flex: 1;
+}
+
+/* Logo e imagen */
+#logoLuciana {
+    height: 75px;
+}
+
+.logoluciana {
+    color:white;
+    font-size: 28px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+/* Menú de navegación */
+.nav-menu-luciana {
+    display: flex;
+    list-style: none;
+    margin-left: auto;
+    line-height: 85px;
+    cursor: pointer;
+}
+
+.nav-menu-item-luciana {
+    font-size: 16px;
+    margin-left: 60px;
+    width: max-content;
+}
+
+.nav-menu-link-luciana {
+    transition: color 0.3s linear 0.02s;
+    padding: 10px 15px;
+    border-radius: 5px 20px;
+}
+
+.nav-menu-link-luciana:hover {
+    background-color: gold;
+    color: black;
+}
+
+/* Dropdown menu */
+.despegable-header {
+    position: relative;
+    list-style: none;
+}
+
+.contenido-despegable {
+    display: none;
+    position: absolute;
+    list-style: none;
+    background-color: darkorange;
+    min-width: 110px;
+}
+
+.contenido-despegable a {
+    color: white;
+    padding: 0 0;
+    display: block;
+}
+
+.contenido-despegable a:hover {
+    background-color: transparent;
+    color: gold;
+}
+
+.despegable-header:hover .contenido-despegable {
+    display: block;
+}
+/* Iconos de navegación */
+.nav-icons-luciana {
+    display: flex;
+    align-items: center;
+    margin-left: 12px;
+}
+
+.nav-icons-luciana a {
+    transition: color 0.3s linear 0.05s;
+    color: white;
+    font-size: 24px;
+    margin-left: 40px;
+}
+
+.nav-icons-luciana a:hover {
+    color: gold;
+}
+
+/* Botón de menú hamburguesa */
+.nav-toggle-menu {
+    color: white;
+    background: none;
+    border: none;
+    font-size: 35px;
+    padding: 0 20px;
+    line-height: 60px;
+    cursor: pointer;
+    margin-left: auto;
+    display: none;
+    margin-left: 20px;
+}
+
+/* Cambiar barra de navegación a negro */
+::-webkit-scrollbar {
+    background-color: #1e1f22;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(0, 0, 0);
+}
+
+::-webkit-scrollbar-track {
+    background-color: #1e1f22;
+}
+
+/* Diseño responsive */
+/*------------------------------------------------pantallas medianas------------------------------------*/
+@media (max-width: 1300px) {
+
+    .nav-menu-luciana {
+        flex-direction: column;
+        align-items: center;
+        background-color: darkorange;
+        position: fixed;
+        top: 69px;
+        width: 100%;
+        padding: 0;
+        height: calc(100% - 75px);
+        overflow-y: auto;
+        left: 100%;
+        transition: left 0.4s;
+    }
+
+    .nav-menu_visible {
+        left: 0;
+    }
+
+    .nav-menu-link-luciana:hover,
+    .nav-menu-link_active {
+        background-color: transparent;
+        color: gold;
+    }
+
+    .toggle-custom {
+        display: block;
+    }
+
+    .carrito {
+        display: block;
+    }
+}
+
+/*------------------------------------------------pantallas pequeñas------------------------------------*/
+@media (max-width: 700px) {
+
+    /* CARGAR DEBAJO DEL HEADER */
+    .main-content {
+        margin-top: 0px;
+    }
+
+    .header-luciana {
+        height: 75px;
+    }
+
+    .nav-icons-luciana {
+        display: none;
+    }
+
+    .nav-toggle-menu {
+        display: block;
+    }
+
+    .main-content {
+        padding-top: 75px;
+    }
+
+    #logoLuciana {
+        height: 70px;
+        margin-right: 10px;
+    }
+
+    .logo-luciana {
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .nav-luciana {
+        justify-content: flex-start;
+    }
+
+    .nav-menu-luciana {
+        flex-direction: column;
+        align-items: center;
+        background-color: darkorange;
+        position: fixed;
+        top: 59px;
+        width: 100%;
+        padding: 0;
+        height: calc(100% - 75px);
+        overflow-y: auto;
+        left: 100%;
+        transition: left 0.4s;
+    }
+
+    .nav-menu_visible {
+        left: 0;
+    }
+
+    .nav-menu-link-luciana:hover,
+    .nav-menu-link_active {
+        background-color: transparent;
+        color: gold;
+    }
+
+    .nav-menu-item-luciana {
+        font-size: 15px;
+        margin-left: 10px;
+        width: max-content;
+        line-height: 55px;
+    }
+
+
+    @media (max-width: 700px) {
+        .carrito {
+            display: block;
+        }
+    }
+}

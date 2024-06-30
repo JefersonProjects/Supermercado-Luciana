@@ -1,0 +1,386 @@
+
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;/* Evita el desbordamiento horizontal */
+}
+
+/* Secciones de contenido */
+.contenido-principal {
+    font-family: Arial, sans-serif;
+    height: 100%;
+}
+
+.contenido_1 {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-items: flex-start;
+    background-image: url('../images/Logos/fondoIndex.png');
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.titulo-index {
+    max-width: 55%;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px 30px;
+    border-radius: 55px;
+    line-height: 1.2;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 45px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 2px 1px 3px white;
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: rgb(22, 22, 24);
+}
+
+.titulo-index span {
+    display: block;
+    font-size: 20px; 
+    margin-top: 25px; 
+    text-transform: none; 
+}
+/* Estilos para la seccion 2 */
+.contenido_2 {
+    background-color: darkorange;
+    width: 100%;
+    height: 100%;
+}
+
+.saludo {
+    font-family: 'bai_jamjureebold', sans-serif;
+    counter-reset: #353535;
+    font-size: 35px;
+    padding: 25px;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.img-contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+    flex-wrap: wrap;
+    /* Añadido para responsive */
+}
+
+#al,#beb,#lim,#cos {
+    font-size: 25px;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.contenido_2 img {
+    height: 200px;
+    border-radius: 50% ;
+    border: 7px  solid #d4d1da ;
+    box-shadow:#1e1f22;
+}
+
+/* Estilos para la seccion 3 */
+.contenido_3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 50px 0;
+    background-color: wheat; /* Fondo del contenedor principal */
+}
+
+.imagen-seccion3{
+    flex: 1;
+    overflow: hidden;
+}
+
+.imagen-seccion3 img {
+    width:100% ;
+    height: 520px;
+}
+
+.texto-seccion3 {
+    flex:1;
+    height: 570px;
+    background-color:darkorange; /* Fondo blanco semitransparente */
+    padding: 10px 30px;
+    border-radius: 15px;
+    margin-left: -40px; /* Ajuste negativo para sobresalir */
+    box-shadow: 0px 0px 8px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* Asegura que el texto esté por encima de otros elementos */
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.texto-seccion3 h1 {
+    color: white;
+    padding: 10px;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.texto-seccion3 p {
+    font-size: 1em;
+    color: white;
+    line-height: 1.6;
+}
+
+/* Seccion 4 */
+.contenido_4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 40px 0;
+    background-color: wheat; /* Fondo del contenedor principal */
+}
+
+.imagen-seccion4{
+    flex: 1;
+    overflow: hidden;
+}
+
+.imagen-seccion4 img {
+    width:100% ;
+    height: 520px;
+}
+
+.texto-seccion4 {
+    flex:1;
+    height: 585px;
+    background-color:darkorange; /* Fondo blanco semitransparente */
+    padding: 10px 30px;
+    border-radius: 15px;
+    margin-right: -40px;
+    box-shadow: 0px 0px 8px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* Asegura que el texto esté por encima de otros elementos */
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.texto-seccion4 h1 {
+    color: white;
+    padding: 10px;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.texto-seccion4 p {
+    font-size: 1em;
+    color: white;
+    line-height: 1.6;
+}
+
+
+
+/* Diseño responsive INDEX*/
+/*------------------------------------------------pantallas medianas------------------------------------*/
+@media (max-width:1300px) {
+    .contenido_1 {
+        background-size: cover;
+        background-position: center;
+        height: auto;
+    }
+
+    .titulo-index {
+        font-size: 30px;
+        padding: 100px 50px;
+    }
+
+    /* Estilo contenido 3 */
+.contenido_3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 50px 0;
+    background-color: wheat; /* Fondo del contenedor principal */
+}
+
+.imagen-seccion3 {
+    flex: 1;
+    overflow: hidden;
+}
+
+.imagen-seccion3 img {
+    width: 100%;
+    height: 520px;
+}
+
+.texto-seccion3 {
+    flex: 1;
+    height: 570px;
+    background-color: darkorange; /* Fondo del contenedor de texto */
+    padding: 10px 30px;
+    border-radius: 15px;
+    margin-left: -40px; /* Ajuste negativo para sobresalir */
+    box-shadow: 0px 0px 8px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* Asegura que el texto esté por encima de otros elementos */
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.texto-seccion3 h1 {
+    color: white;
+    padding: 10px;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.texto-seccion3 p {
+    font-size: 1em;
+    color: white;
+    line-height: 1.6;
+}
+
+/* Estilo contenido 4 */
+.contenido_4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 40px 0;
+    background-color: wheat; /* Fondo del contenedor principal */
+}
+
+.imagen-seccion4 {
+    flex: 1;
+    overflow: hidden;
+}
+
+.imagen-seccion4 img {
+    width: 100%;
+    height: 520px;
+}
+
+.texto-seccion4 {
+    flex: 1;
+    height: 585px;
+    background-color: darkorange; /* Fondo del contenedor de texto */
+    padding: 10px 30px;
+    border-radius: 15px;
+    margin-right: -40px;
+    box-shadow: 0px 0px 8px 12px rgba(0, 0, 0, 0.1);
+    z-index: 1; /* Asegura que el texto esté por encima de otros elementos */
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.texto-seccion4 h1 {
+    color: white;
+    padding: 10px;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.texto-seccion4 p {
+    font-size: 1em;
+    color: white;
+    line-height: 1.6;
+}
+
+
+}
+
+
+
+
+
+
+/*------------------------------------------------pantallas pequeñas------------------------------------*/
+@media (max-width: 700px) {
+
+    .contenido_1 {
+        background-size: cover;
+        background-position: center;
+        height: auto;
+        align-items: center;
+        padding: 50px 0;
+    }
+
+    .titulo-index {
+        font-size: 24px;
+        padding: 30px;
+    }
+
+
+
+    /*Estilo contenido 2 */
+    .img-contenedor {
+        flex-direction: column;
+        padding: 0 5%;
+
+    }
+
+    #mot,
+    #ase,
+    #acc {
+        font-size: 20px;
+        padding: 5px;
+    }
+
+    .saludo h2 {
+        font-size: 24px;
+    }
+
+    .contenido_2 img {
+        height: 180px;
+        border-radius: 10%;
+        border: 5px solid #0e0a38;
+        box-shadow: 1px 1px 1px #1e1f22;
+    }
+
+    /*Estilo contenido 3 */
+    .contenido_3 {
+        flex-direction: column;
+    }
+
+    .imagen-seccion3 {
+        display: none;
+    }
+
+    .texto-seccion3 {
+        margin-left: 0;
+        height: auto;
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    /*Estilo contenido 4 */
+    .contenido_4 {
+        flex-direction: column;
+    }
+
+    .imagen-seccion4 {
+        display: none;
+    }
+
+    .texto-seccion4 {
+        margin-right: 0;
+        height: auto;
+        max-width: 100%;
+        padding: 20px;
+    }
+
+
+}
