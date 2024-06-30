@@ -1,34 +1,30 @@
 package com.proyecto.ed.ProyectoED.Models;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "Producto")
+
 public class Producto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "precio")
     private Double precio;
 
-    @Column(name = "stock")
     private Integer stock;
 
-    @Column(name="categoria_id")
     private Long categoriaId;
+
+    private String categoriaNombre;
+
+    private byte [] imagen;
+
+
 
 }

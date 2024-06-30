@@ -17,7 +17,9 @@ public class CategoriaProductosService {
       return iCategoriaProductos.listarCategorias();
     }
 
-
+    public CategoriaProducto listarPorId(Long id){
+        return iCategoriaProductos.listarPorId(id);
+    }
     public void guardarCategoria(CategoriaProducto categoriaProducto) {
         iCategoriaProductos.guardarCategoria(categoriaProducto);
     }

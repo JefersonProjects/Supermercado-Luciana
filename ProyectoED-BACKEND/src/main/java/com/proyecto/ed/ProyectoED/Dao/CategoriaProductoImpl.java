@@ -1,5 +1,6 @@
 package com.proyecto.ed.ProyectoED.Dao;
 
+import com.proyecto.ed.ProyectoED.Models.Administrador;
 import com.proyecto.ed.ProyectoED.Models.CategoriaProducto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,6 +19,17 @@ public class CategoriaProductoImpl implements ICategoriaProductos{
                 rs.getLong("id"),
                 rs.getString("nombre"),
                 rs.getString("descripcion")
+        ));
+    }
+
+    @Override
+    public CategoriaProducto listarPorId(Long id) {
+        String sql = "Select * from Categoria_Productos where id = ?";
+        return jdbcTemplate.queryForObject(sql,new Object[]{id}, (rs, rowNum) -> new CategoriaProducto(
+                rs.getLong("id"),
+                rs.getString("nombre"),
+                rs.getString("descripcion")
+
         ));
     }
 

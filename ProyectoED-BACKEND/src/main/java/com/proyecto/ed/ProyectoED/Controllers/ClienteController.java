@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:5173/")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/clientes")
 
 public class ClienteController {
 
@@ -19,33 +19,28 @@ public class ClienteController {
     @Autowired
     private ClienteService serviceCliente;
 
-    @GetMapping("/1")
-    public String comienzo(){
-        return "Hola Mundo";
-    }
-
-    @GetMapping("/clientes")
+    @GetMapping
     public List<Cliente> listarClientes() {
         return serviceCliente.listarClientes();
     }
 
-    @GetMapping("/clientes/{dni}")
+    @GetMapping("/dni/{dni}")
     public List<Cliente> listarPorDni(@PathVariable String dni) {
         return serviceCliente.listarPorDni(dni);
     }
 
-    @PostMapping("/clientes")
+    @PostMapping("/registro")
     public Cliente registrarCliente(@RequestBody Cliente cliente) {
         return serviceCliente.registrarCliente(cliente);
     }
 
-    @PutMapping("/clientes/{id}")
+    @PutMapping("/{id}")
     public Cliente modificarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
         cliente.setId(id);
         return serviceCliente.modificarCliente(cliente);
     }
 
-    @DeleteMapping("/clientes/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarCliente(@PathVariable Long id) {
         boolean eliminado = serviceCliente.eliminarCliente(id);
         if (eliminado) {

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:5173/")
 @RestController
 @RequestMapping("/api/categorias")
 public class CategoriaProductoController {
@@ -21,12 +21,20 @@ public class CategoriaProductoController {
     }
 
 
+    @GetMapping("/id/{id}")
+    public CategoriaProducto listarPorId(@PathVariable Long  id){
+
+        return categoriaProductosService.listarPorId(id);
+    }
+
+
     @PostMapping
     public void guardarCategoria(@RequestBody  CategoriaProducto categoriaProducto){
         categoriaProductosService.guardarCategoria(categoriaProducto);
     }
-    @PutMapping
-    public void actualizarCategoria(@RequestBody CategoriaProducto categoriaProducto){
+    @PutMapping("/update/{id}")
+    public void actualizarCategoria( @PathVariable Long id,@RequestBody CategoriaProducto categoriaProducto){
+        categoriaProducto.setId(id);
         categoriaProductosService.actualizarCategoria(categoriaProducto);
     }
     @DeleteMapping("/{id}")
