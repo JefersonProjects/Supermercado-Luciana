@@ -1,45 +1,117 @@
-import React from 'react';
-import { Link } from 'react-router-dom'; 
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import LogoPasillos from "../assets/images/Logos/pasillos.png";
 import "../assets/css/inicioSesion.css";
+import AuthService from '../services/authService';
 
-const Registro =()=>{
+const Registro = ({ onLogin }) => {
+    const [formData, setFormData] = useState({
+        nombre: '',
+        apellidos: '',
+        dni: '',
+        telefono: '',
+        email: '',
+        password: '',
+        confirmarPassword: '',
+    });
 
-    const handleLinkClick = () => {
-        //  aqui ponemso la la logica para operaciones futuras si es necesario
-        
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+    const navigate = useNavigate();
+
+    const handleKeyPress = (e) => {
+        const charCode = e.charCode ? e.charCode : e.keyCode;
+        if (charCode < 48 || charCode > 57) {
+            e.preventDefault();
+        }
     };
 
-    return(
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'dni' || name === 'telefono') {
+            if (!/^\d*$/.test(value)) {
+                return;
+            }
+        }
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (formData.password !== formData.confirmarPassword) {
+            setModalMessage('Las contraseñas no coinciden');
+            setMostrarModal(true);
+            return;
+        }
+        try {
+            const response = await AuthService.registro({
+                nombre: formData.nombre,
+                apellido: formData.apellidos,
+                dni: formData.dni,
+                telefono: formData.telefono,
+                email: formData.email,
+                password: formData.password
+            });
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('role', response.data.role);
+            onLogin(response.data.token, response.data.role); // Inicia sesión automáticamente
+            setModalMessage('Registrado correctamente');
+            setMostrarModal(true);
+        } catch (error) {
+            console.error('Error al registrar:', error);
+            setModalMessage('Error al registrar. Por favor, intenta de nuevo.');
+            setMostrarModal(true);
+        }
+    };
+
+    const handleOkClick = () => {
+        setMostrarModal(false);
+        if (modalMessage === 'Registrado correctamente') {
+            navigate('/');
+        }
+    };
+
+    return (
         <main className="main-Logins">
-        <div className="contenedor">
-        <div className="imagen-supermercado">
-            <img src={LogoPasillos} alt="Supermercado Luciana" />
-        </div>
-        <div className="formulario-login">
-            <h1>REGISTRO</h1>
-            <form id="formularioRegistro">
-                <label for="nombre">Nombre   </label>
-                <input type="text" id="nombre" name="nombre" required />
-                <label for="apellidos">Apellidos</label>
-                <input type="text" id="apellidos" name="apellidos" required />
-                <label for="dni">DNI</label>
-                <input type="text" id="dni" name="dni" required />
-                <label for="telefono">Teléfono</label>
-                <input type="text" id="telefono" name="telefono" required />
-                <label for="email">Correo</label>
-                <input type="email" id="email" name="email" required />
-                <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" required />
-                <label for="confirmarPassword">Confirmar Contraseña</label>
-                <input type="password" id="confirmarPassword" name="confirmarPassword" required />
-                <button className="button-login" type="submit">REGISTRARSE</button>
-                <h2>Ya tienes una cuenta? <Link  to="/inicioSesion"  onClick={handleLinkClick}>Inicia sesion aqui</Link></h2>
-            </form>
-        </div>
-    </div>
-    </main>
-    )
-}
+            <div className="contenedor">
+                <div className="imagen-supermercado">
+                    <img src={LogoPasillos} alt="Supermercado Luciana" />
+                </div>
+                <div className="formulario-login">
+                    <h1>REGISTRO</h1>
+                    <form id="formularioRegistro" onSubmit={handleSubmit}>
+                        <label htmlFor="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required value={formData.nombre} onChange={handleChange} />
+                        <label htmlFor="apellidos">Apellidos</label>
+                        <input type="text" id="apellidos" name="apellidos" required value={formData.apellidos} onChange={handleChange} />
+                        <label htmlFor="dni">DNI</label>
+                        <input type="text" id="dni" name="dni" maxLength={8} required value={formData.dni} onChange={handleChange} onKeyPress={handleKeyPress} />
+                        <label htmlFor="telefono">Teléfono</label>
+                        <input type="text" id="telefono" name="telefono" maxLength={9} required value={formData.telefono} onChange={handleChange} onKeyPress={handleKeyPress} />
+                        <label htmlFor="email">Correo</label>
+                        <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} />
+                        <label htmlFor="password">Contraseña</label>
+                        <input type="password" id="password" name="password" required value={formData.password} onChange={handleChange} />
+                        <label htmlFor="confirmarPassword">Confirmar Contraseña</label>
+                        <input type="password" id="confirmarPassword" name="confirmarPassword" required value={formData.confirmarPassword} onChange={handleChange} />
+                        <button className="button-login" type="submit">REGISTRARSE</button>
+                        <h2>Ya tienes una cuenta? <Link to="/inicioSesion">Inicia sesión aquí</Link></h2>
+                    </form>
+                    {mostrarModal && (
+                        <div className="modal">
+                            <div className="modal-content">
+                                <p>{modalMessage}</p>
+                                <button className="btn btn-danger" onClick={handleOkClick}>OK</button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </main>
+    );
+};
 
 export default Registro;

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/css/headerAdmin.css';
-import logoAdmin from '../assets/images/Logos/logoAdmin.png'; 
-
+import logoAdmin from '../assets/images/Logos/logoAdmin.png';
 
 const HeaderAdmin = ({ exitAdminMode }) => {
     const [menuVisible, setMenuVisible] = useState(false);
@@ -29,7 +28,7 @@ const HeaderAdmin = ({ exitAdminMode }) => {
                     <li className="nav-menu-item-luciana-Admin">
                         <Link to="/listClientes" className="nav-menu-link-luciana-Admin nav-link-luciana-Admin" onClick={handleLinkClick}>CLIENTES</Link>
                     </li>
-                    <li className="nav-menu-item-luciana-Admin ">
+                    <li className="nav-menu-item-luciana-Admin">
                         <Link to="" className="nav-menu-link-luciana-Admin nav-link-luciana-Admin" onClick={handleLinkClick}>VENTAS</Link>
                     </li>
                     <li className="nav-menu-item-luciana-Admin">
