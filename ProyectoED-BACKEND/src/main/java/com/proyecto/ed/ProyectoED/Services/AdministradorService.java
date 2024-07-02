@@ -4,6 +4,7 @@ import com.proyecto.ed.ProyectoED.Dao.IAdministrador;
 import com.proyecto.ed.ProyectoED.Dao.ICliente;
 import com.proyecto.ed.ProyectoED.Models.Administrador;
 import com.proyecto.ed.ProyectoED.Models.Cliente;
+import com.proyecto.ed.ProyectoED.Models.Role;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ public class AdministradorService {
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
         String hash = argon2.hash(1, 1024, 1, administrador.getPassword());
         administrador.setPassword(hash);
+        administrador.setRole(Role.ADMIN);
         return administradorRepository.registrarAdministrador(administrador);
     }
 

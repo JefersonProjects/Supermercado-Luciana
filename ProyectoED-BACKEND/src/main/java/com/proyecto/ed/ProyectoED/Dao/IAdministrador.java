@@ -19,4 +19,5 @@ public interface IAdministrador {
     boolean eliminarAdministrador(Long id);
 
 
+    Administrador findByEmail(String email);
 }

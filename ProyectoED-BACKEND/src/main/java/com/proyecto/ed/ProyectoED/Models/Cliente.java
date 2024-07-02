@@ -1,30 +1,14 @@
 package com.proyecto.ed.ProyectoED.Models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 
+public class Cliente extends Usuario{
 
-public class Cliente {
-
-    private Long id;
-
-    private String nombre;
-
-    private String apellido;
-
-    private String dni;
-
-    private String telefono;
-
-    private String email;
-
-    private String password;
-
-
+    public Cliente(Long id, String nombre, String apellido, String dni, String telefono, String email, String password, Role role) {
+        super(id, nombre, apellido, dni, telefono, email, password, role);
+    }
 }

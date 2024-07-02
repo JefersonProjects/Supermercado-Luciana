@@ -13,4 +13,6 @@ public interface ICliente {
     Cliente modificarCliente(Cliente cliente);
 
     boolean eliminarCliente(Long id);
+
+    Cliente findByEmail(String email);
 }

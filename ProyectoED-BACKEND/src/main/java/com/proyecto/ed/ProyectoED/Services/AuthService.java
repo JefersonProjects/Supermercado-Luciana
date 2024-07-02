@@ -1,5 +1,8 @@
-package com.proyecto.ed.ProyectoED.Authentication;
+package com.proyecto.ed.ProyectoED.Services;
 
+import com.proyecto.ed.ProyectoED.Authentication.AuthResponse;
+import com.proyecto.ed.ProyectoED.Authentication.JwtUtil;
+import com.proyecto.ed.ProyectoED.Authentication.RegisterRequest;
 import com.proyecto.ed.ProyectoED.Dao.IAdministrador;
 import com.proyecto.ed.ProyectoED.Dao.ICliente;
 import com.proyecto.ed.ProyectoED.Models.Administrador;
@@ -10,8 +13,14 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +56,7 @@ public class AuthService {
         }
 
         String token = jwtUtil.generateToken(usuario);
-        return new AuthResponse(token);
+        return new AuthResponse(token, usuario.getRole().name());
     }
 
     private boolean verifyPassword(String rawPassword, String hashedPassword) {
@@ -61,7 +70,8 @@ public class AuthService {
         Cliente cliente = new Cliente(null, request.getNombre(), request.getApellido(), request.getDni(), request.getTelefono(), request.getEmail(), hash, Role.CLIENT);
         clienteRepository.registrarCliente(cliente);
         String token = jwtUtil.generateToken(cliente);
-        return new AuthResponse(token);
+        return new AuthResponse(token,cliente.getRole().name());
+
     }
 
     public AuthResponse registerAdministrador(RegisterRequest request) {
@@ -70,6 +80,7 @@ public class AuthService {
         Administrador administrador = new Administrador(null, request.getNombre(), request.getApellido(), request.getDni(), request.getTelefono(), request.getEmail(), hash, Role.ADMIN);
         administradorRepository.registrarAdministrador(administrador);
         String token = jwtUtil.generateToken(administrador);
-        return new AuthResponse(token);
+        return new AuthResponse(token,administrador.getRole().name());
     }
+
 }

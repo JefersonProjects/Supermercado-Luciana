@@ -1,4 +1,4 @@
-package com.proyecto.ed.ProyectoED.User;
+package com.proyecto.ed.ProyectoED.Models;
 
 public enum Role {
     ADMIN,CLIENT

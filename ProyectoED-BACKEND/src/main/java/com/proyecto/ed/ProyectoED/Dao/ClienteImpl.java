@@ -1,6 +1,7 @@
 package com.proyecto.ed.ProyectoED.Dao;
 
 import com.proyecto.ed.ProyectoED.Models.Cliente;
+import com.proyecto.ed.ProyectoED.Models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -22,7 +23,8 @@ public class ClienteImpl implements ICliente {
                 rs.getString("dni"),
                 rs.getString("telefono"),
                 rs.getString("email"),
-                rs.getString("password")
+                rs.getString("password"),
+                Role.valueOf(rs.getString("role"))
         ));
     }
 
@@ -36,25 +38,25 @@ public class ClienteImpl implements ICliente {
                 rs.getString("dni"),
                 rs.getString("telefono"),
                 rs.getString("email"),
-                rs.getString("password")
+                rs.getString("password"),
+                Role.valueOf(rs.getString("role"))
         ));
     }
 
     @Override
     public Cliente registrarCliente(Cliente cliente) {
-        String sql = "INSERT INTO Cliente (nombre, apellido, dni, telefono," +
-                " email, password) VALUES (?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, cliente.getNombre(), cliente.getApellido(),
-                cliente.getDni(), cliente.getTelefono(), cliente.getEmail(),
-                cliente.getPassword());
+        String sql = "INSERT INTO Cliente (nombre, apellido, dni, telefono, email, password, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, cliente.getNombre(), cliente.getApellido(), cliente.getDni(),
+                cliente.getTelefono(), cliente.getEmail(), cliente.getPassword(), cliente.getRole().name());
         return cliente;
     }
 
     @Override
     public Cliente modificarCliente(Cliente cliente) {
-        String sql = "UPDATE Cliente SET nombre = ?, apellido = ?, dni = ?," +
-                " telefono = ?, email = ?, password = ? WHERE id = ?";
-        jdbcTemplate.update(sql, cliente.getNombre(), cliente.getApellido(), cliente.getDni(), cliente.getTelefono(), cliente.getEmail(), cliente.getPassword(), cliente.getId());
+        String sql = "UPDATE Cliente SET nombre = ?, apellido = ?, dni = ?, telefono = ?, email = ?, password = ?, role = ? WHERE id = ?";
+        jdbcTemplate.update(sql, cliente.getNombre(), cliente.getApellido(), cliente.getDni(),
+                cliente.getTelefono(), cliente.getEmail(), cliente.getPassword(),
+                cliente.getRole().name(), cliente.getId());
         return cliente;
     }
 
@@ -63,6 +65,21 @@ public class ClienteImpl implements ICliente {
         String sql = "DELETE FROM Cliente WHERE id = ?";
         int resultado = jdbcTemplate.update(sql, id);
         return resultado > 0;
+    }
+
+    @Override
+    public Cliente findByEmail(String email) {
+        String sql = "SELECT * FROM Cliente WHERE email = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{email}, (rs, rowNum) -> new Cliente(
+                rs.getLong("id"),
+                rs.getString("nombre"),
+                rs.getString("apellido"),
+                rs.getString("dni"),
+                rs.getString("telefono"),
+                rs.getString("email"),
+                rs.getString("password"),
+                Role.valueOf(rs.getString("role"))
+        ));
     }
 
 }

@@ -6,23 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 
-public class Administrador {
-
-    private Long id;
-
-    private String nombre;
-
-    private String apellido;
-
-    private String dni;
-
-    private String telefono;
-
-    private String email;
-
-    private String password;
-
+public class Administrador extends Usuario {
+    public Administrador(Long id, String nombre, String apellido, String dni, String telefono, String email, String password, Role role) {
+        super(id, nombre, apellido, dni, telefono, email, password, role);
+    }
 }
