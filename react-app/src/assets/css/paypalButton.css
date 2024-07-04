@@ -1,0 +1,46 @@
+.paypal-button-container {
+    background-image: url('https://i.blogs.es/c154b6/supermercado-fruta/450_1000.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+.paypal-button-overlay {
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.paypal-button-overlay h1 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.paypal-button-overlay .paypal-buttons {
+    margin-bottom: 20px;
+}
+
+.paypal-button-overlay .back-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.paypal-button-overlay .back-button:hover {
+    background-color: #0056b3;
+}
+

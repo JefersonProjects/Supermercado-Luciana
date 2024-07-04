@@ -3,6 +3,7 @@ package com.proyecto.ed.ProyectoED.Dao;
 import com.proyecto.ed.ProyectoED.Models.Cliente;
 import com.proyecto.ed.ProyectoED.Models.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -70,16 +71,20 @@ public class ClienteImpl implements ICliente {
     @Override
     public Cliente findByEmail(String email) {
         String sql = "SELECT * FROM Cliente WHERE email = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{email}, (rs, rowNum) -> new Cliente(
-                rs.getLong("id"),
-                rs.getString("nombre"),
-                rs.getString("apellido"),
-                rs.getString("dni"),
-                rs.getString("telefono"),
-                rs.getString("email"),
-                rs.getString("password"),
-                Role.valueOf(rs.getString("role"))
-        ));
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{email}, (rs, rowNum) -> new Cliente(
+                    rs.getLong("id"),
+                    rs.getString("nombre"),
+                    rs.getString("apellido"),
+                    rs.getString("dni"),
+                    rs.getString("telefono"),
+                    rs.getString("email"),
+                    rs.getString("password"),
+                    Role.valueOf(rs.getString("role"))
+            ));
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
 }

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import ProductoService from '../services/productoService';
 import CategoriaService from '../services/categoriaService';
 import fondoTitulo from '../assets/images/Products/productos_titulo.png';
-import "../assets/css/catalogo.css"
+import "../assets/css/catalogo.css";
 
-const Productos = () => {
+const Productos = ({ carrito = [], agregarAlCarrito }) => {
     const [productos, setProductos] = useState([]);
     const [categorias, setCategorias] = useState([]);
     const [filtros, setFiltros] = useState({
@@ -13,14 +13,14 @@ const Productos = () => {
         precio: 500,
         ordenar: ''
     });
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     useEffect(() => {
-        // Obtenemos los productos
         ProductoService.getAllProductos()
             .then(response => setProductos(response.data))
             .catch(error => console.error('Error al obtener productos:', error));
 
-        // Obtenemos las categorías
         CategoriaService.getAllCategorias()
             .then(response => setCategorias(response.data))
             .catch(error => console.error('Error al obtener categorías:', error));
@@ -74,6 +74,20 @@ const Productos = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+    };
+
+    const handleAgregarAlCarrito = (producto) => {
+        if (carrito.some(item => item.id === producto.id)) {
+            setModalMessage('El Producto ya está en el carrito');
+        } else {
+            agregarAlCarrito(producto);
+            setModalMessage('Producto agregado al carrito');
+        }
+        setMostrarModal(true);
+    };
+
+    const handleOkClick = () => {
+        setMostrarModal(false);
     };
 
     return (
@@ -161,18 +175,31 @@ const Productos = () => {
                                 <img src={`data:image/png;base64,${producto.imagen}`} alt={producto.nombre} />
                                 <h3>{producto.nombre}</h3>
                                 <p>{producto.descripcion}</p>
-                                <form action="compraTransProd.php" method="POST">
-                                    <input type="hidden" name="id" value={producto.id} />
-                                    <button type="submit" name="boton" value="Agregar">Agregar al carrito</button>
-                                </form>
+                                {carrito.some(item => item.id === producto.id) ? (
+                                    <p>Producto ya está en el carrito</p>
+                                ) : (
+                                    <button onClick={() => handleAgregarAlCarrito(producto)}>Agregar al carrito</button>
+                                )}
                                 <h4>S/ {producto.precio}</h4>
                             </div>
                         ))}
                     </div>
                 </div>
             </main>
+            {mostrarModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <p>{modalMessage}</p>
+                        <button className="btn btn-danger" onClick={handleOkClick}>OK</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
 export default Productos;
+
+
+
+

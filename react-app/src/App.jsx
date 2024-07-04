@@ -19,11 +19,18 @@ import ActualizarCategorias from './components/AdminComponents/actualizarCategor
 import Products from './components/products.jsx';
 import MiCuenta from './components/miCuenta.jsx';
 import PrivateRoute from './components/Utils/privateRoute.jsx';
+import Carrito from './components/carrito.jsx';
+import PaypalButton from './components/PaypalButton/paypal.jsx';
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [adminMode, setAdminMode] = useState(false);
+  const [carrito, setCarrito] = useState(() => {
+    const savedCarrito = localStorage.getItem('carrito');
+    return savedCarrito ? JSON.parse(savedCarrito) : [];
+  });
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -35,6 +42,30 @@ function App() {
       setIsLoggedIn(true);
     }
   }, []);
+
+{/* funcion para actualizar los precios delcarrito y almacenarlos*/}
+  useEffect(() => {
+    const actualizarPreciosCarrito = async () => {
+      try {
+        const response = await ProductoService.getAllProductos();
+        const productosActuales = response.data;
+        setCarrito(prevCarrito => {
+          return prevCarrito.map(item => {
+            const productoActual = productosActuales.find(p => p.id === item.id);
+            return productoActual ? { ...item, precio: productoActual.precio } : item;
+          });
+        });
+      } catch (error) {
+        console.error('Error al obtener los productos:', error);
+      }
+    };
+
+    actualizarPreciosCarrito();
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+  }, [carrito]);
+{/* ----------------------------------------------------------------------*/}
 
   const handleLogin = (token, role) => {
     localStorage.setItem('token', token);
@@ -48,13 +79,27 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('carrito');
     setIsAdmin(false);
     setIsLoggedIn(false);
     setAdminMode(false);
+    setCarrito([]);
   };
 
   const toggleAdminMode = () => {
     setAdminMode(!adminMode);
+  };
+
+  const agregarAlCarrito = (producto) => {
+    setCarrito(prevCarrito => {
+      const productoExistente = prevCarrito.find(item => item.id === producto.id);
+      if (productoExistente) {
+        return prevCarrito.map(item =>
+          item.id === producto.id ? { ...item, stock: item.stock + 1 } : item
+        );
+      }
+      return [...prevCarrito, { ...producto, stock: 1 }];
+    });
   };
 
   return (
@@ -74,7 +119,9 @@ function App() {
           <Route path="/recuperacionPassword" element={<RecuperacionPassword />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/cuenta" element={<MiCuenta handleLogout={handleLogout} />} />
-          <Route path="/products" element={<Products />} />
+          <Route path="/products" element={<Products carrito={carrito} agregarAlCarrito={agregarAlCarrito} />} />
+          <Route path="/carrito" element={<Carrito carrito={carrito} setCarrito={setCarrito} isLoggedIn={isLoggedIn} />} />
+          <Route path='/pagar-monto' element={<PaypalButton />} />
           {/* rutas admin */}
           <Route path="/listClientes" element={
             <PrivateRoute 

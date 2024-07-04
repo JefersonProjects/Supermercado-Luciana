@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import LogoPasillos from "../assets/images/Logos/pasillos.png";
-import "../assets/css/inicioSesion.css";
+import LogoPasillos from '../assets/images/Logos/pasillos.png';
+import '../assets/css/inicioSesion.css';
 import AuthService from '../services/authService';
 
-const Registro = ({ onLogin }) => {
+const Registro = () => {
     const [formData, setFormData] = useState({
         nombre: '',
         apellidos: '',
@@ -39,6 +39,7 @@ const Registro = ({ onLogin }) => {
         });
     };
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (formData.password !== formData.confirmarPassword) {
@@ -46,31 +47,29 @@ const Registro = ({ onLogin }) => {
             setMostrarModal(true);
             return;
         }
+
         try {
-            const response = await AuthService.registro({
+            await AuthService.registro({
                 nombre: formData.nombre,
                 apellido: formData.apellidos,
                 dni: formData.dni,
                 telefono: formData.telefono,
                 email: formData.email,
-                password: formData.password
+                password: formData.password,
             });
-            localStorage.setItem('token', response.data.token);
-            localStorage.setItem('role', response.data.role);
-            onLogin(response.data.token, response.data.role); // Inicia sesión automáticamente
-            setModalMessage('Registrado correctamente');
+            setModalMessage('Te has registrado correctamente');
             setMostrarModal(true);
         } catch (error) {
             console.error('Error al registrar:', error);
-            setModalMessage('Error al registrar. Por favor, intenta de nuevo.');
+            setModalMessage('Error al registrar. Por favor, intenta de nuevo con otro correo.');
             setMostrarModal(true);
         }
     };
 
     const handleOkClick = () => {
         setMostrarModal(false);
-        if (modalMessage === 'Registrado correctamente') {
-            navigate('/');
+        if (modalMessage === 'Te has registrado correctamente') {
+            navigate('/inicioSesion');
         }
     };
 
@@ -97,8 +96,9 @@ const Registro = ({ onLogin }) => {
                         <input type="password" id="password" name="password" required value={formData.password} onChange={handleChange} />
                         <label htmlFor="confirmarPassword">Confirmar Contraseña</label>
                         <input type="password" id="confirmarPassword" name="confirmarPassword" required value={formData.confirmarPassword} onChange={handleChange} />
+                        {/* <ReCAPTCHA sitekey="TU_SITE_KEY" onChange={handleCaptchaChange} /> */}
                         <button className="button-login" type="submit">REGISTRARSE</button>
-                        <h2>Ya tienes una cuenta? <Link to="/inicioSesion">Inicia sesión aquí</Link></h2>
+                        <h2>¿Ya tienes una cuenta? <Link to="/inicioSesion">Inicia sesión aquí</Link></h2>
                     </form>
                     {mostrarModal && (
                         <div className="modal">
@@ -115,3 +115,5 @@ const Registro = ({ onLogin }) => {
 };
 
 export default Registro;
+
+

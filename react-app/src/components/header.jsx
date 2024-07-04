@@ -58,7 +58,7 @@ const Header = ({ isLoggedIn, isAdmin, toggleAdminMode }) => {
                             <i className="fa-solid fa-screwdriver-wrench"></i>
                         </Link>
                     )}
-                    <Link to="/carritoShow" className="iconoCarrito">
+                    <Link to="/carrito" className="iconoCarrito">
                         <i className="fa-solid fa-cart-shopping"></i>
                     </Link>
                     {isLoggedIn && (

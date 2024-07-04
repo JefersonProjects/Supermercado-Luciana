@@ -65,6 +65,11 @@ public class AuthService {
     }
 
     public AuthResponse registerCliente(RegisterRequest request) {
+        // Verificar si el email ya existe
+        if (clienteRepository.findByEmail(request.getEmail()) != null) {
+            throw new IllegalArgumentException("El correo electrónico ya está registrado");
+        }
+
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
         String hash = argon2.hash(1, 1024, 1, request.getPassword());
         Cliente cliente = new Cliente(null, request.getNombre(), request.getApellido(), request.getDni(), request.getTelefono(), request.getEmail(), hash, Role.CLIENT);

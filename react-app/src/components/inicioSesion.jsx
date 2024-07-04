@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
 import LogoPasillos from '../assets/images/Logos/pasillos.png';
 import '../assets/css/inicioSesion.css';
 import AuthService from '../services/authService';
-
 
 const InicioSesion = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [mensaje, setMensaje] = useState('');
+    const [captchaToken, setCaptchaToken] = useState(null);
     const navigate = useNavigate();
 
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
+    const handleCaptchaChange = (token) => setCaptchaToken(token);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!captchaToken) {
+            setMensaje('Por favor, completa el captcha.');
+            return;
+        }
         try {
-            const response = await AuthService.login({ email, password });
+            const response = await AuthService.login({ email, password, captchaToken });
             const { token, role } = response.data;
             onLogin(token, role);
             setMensaje('Inicio de sesión exitoso');
@@ -35,7 +41,6 @@ const InicioSesion = ({ onLogin }) => {
         setMensaje('');
     };
 
-
     return (
         <main className="main-Logins">
             <div className="contenedor">
@@ -49,6 +54,7 @@ const InicioSesion = ({ onLogin }) => {
                         <input type="text" id="email" name="email" value={email} onChange={handleEmailChange} required />
                         <label htmlFor="password">Contraseña:</label>
                         <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} required />
+                        <ReCAPTCHA sitekey="6LeDLAYqAAAAAKkNrnzVc56Bw3p6TW7MRdgJM2Vb" onChange={handleCaptchaChange} />
                         <button className="button-login" type="submit">INICIAR SESIÓN</button>
                         {mensaje && <p>{mensaje}</p>}
                         <h2>No tienes una cuenta? <Link to="/registro" onClick={handleLinkClick}>Crea una ahora</Link></h2>
@@ -61,4 +67,4 @@ const InicioSesion = ({ onLogin }) => {
     );
 };
 
-export default InicioSesion; 
+export default InicioSesion;

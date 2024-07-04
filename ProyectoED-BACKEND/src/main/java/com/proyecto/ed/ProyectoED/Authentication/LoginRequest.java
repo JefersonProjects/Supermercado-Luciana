@@ -14,6 +14,7 @@ public class LoginRequest {
     String email;
     String password;
     String captchaValue;
+    private String captchaToken;
 
 
 }
