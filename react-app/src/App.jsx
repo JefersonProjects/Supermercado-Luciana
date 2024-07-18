@@ -21,6 +21,7 @@ import MiCuenta from './components/miCuenta.jsx';
 import PrivateRoute from './components/Utils/privateRoute.jsx';
 import Carrito from './components/carrito.jsx';
 import PaypalButton from './components/PaypalButton/paypal.jsx';
+import ListVenta from './components/AdminComponents/listaVenta.jsx';
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -32,8 +33,6 @@ function App() {
   });
 
   const [userData, setUserData] = useState(null);
-
-
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -50,7 +49,6 @@ function App() {
     }
   }, []);
 
-{/* funcion para actualizar los precios delcarrito y almacenarlos*/}
   useEffect(() => {
     const actualizarPreciosCarrito = async () => {
       try {
@@ -73,18 +71,17 @@ function App() {
   useEffect(() => {
     localStorage.setItem('carrito', JSON.stringify(carrito));
   }, [carrito]);
-{/* ----------------------------------------------------------------------*/}
 
-const handleLogin = (token, role, user) => {
-  localStorage.setItem('token', token);
-  localStorage.setItem('role', role);
-  localStorage.setItem('userData', JSON.stringify(user));
-  if (role === 'ADMIN') {
+  const handleLogin = (token, role, user) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('role', role);
+    localStorage.setItem('userData', JSON.stringify(user));
+    if (role === 'ADMIN') {
       setIsAdmin(true);
-  }
-  setIsLoggedIn(true);
-  setUserData(user);
-};
+    }
+    setIsLoggedIn(true);
+    setUserData(user);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -112,7 +109,9 @@ const handleLogin = (token, role, user) => {
       return [...prevCarrito, { ...producto, stock: 1 }];
     });
   };
-  console.log(userData)
+
+  console.log(userData);
+
   return (
     <Router>
       <ScrollToTop />
@@ -132,52 +131,57 @@ const handleLogin = (token, role, user) => {
           <Route path="/cuenta" element={<MiCuenta handleLogout={handleLogout} />} />
           <Route path="/products" element={<Products carrito={carrito} agregarAlCarrito={agregarAlCarrito} />} />
           <Route path="/carrito" element={<Carrito carrito={carrito} setCarrito={setCarrito} isLoggedIn={isLoggedIn} userData={userData} />} />
-          <Route path='/pagar-monto' element={<PaypalButton setCarrito={setCarrito} />} />
+          <Route path='/paypal-button' element={<PaypalButton setCarrito={setCarrito} />} />
 
           {/* rutas admin */}
           <Route path="/listClientes" element={
             <PrivateRoute 
-            isLoggedIn={isLoggedIn} isAdmin={isAdmin}><ListCliente />
-          </PrivateRoute>
-        } />
-
+              isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
+              <ListCliente />
+            </PrivateRoute>
+          } />
           <Route path="/listCategorias" element={
-            <PrivateRoute isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
-            <ListCategoria />
-          </PrivateRoute>
-        } />
-
+            <PrivateRoute 
+              isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
+              <ListCategoria />
+            </PrivateRoute>
+          } />
+          <Route path="/listVentas" element={
+            <PrivateRoute 
+              isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
+              <ListVenta />
+            </PrivateRoute>
+          } />
           <Route path="/listProductos" element={
-            <PrivateRoute isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
-            <ListProducto />
-          </PrivateRoute>
-        } />
-
-
+            <PrivateRoute 
+              isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
+              <ListProducto />
+            </PrivateRoute>
+          } />
           <Route path="/agregarItems" element={
-            <PrivateRoute isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
-            <AgregarItems />
-          </PrivateRoute>
-        } />
-
+            <PrivateRoute 
+              isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
+              <AgregarItems />
+            </PrivateRoute>
+          } />
           <Route path="/agregarCategorias" element={
-            <PrivateRoute isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
-            <AgregarCategorias />
-          </PrivateRoute>
-        } />
-
+            <PrivateRoute 
+              isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
+              <AgregarCategorias />
+            </PrivateRoute>
+          } />
           <Route path="/actualizarItems/:id" element={
-            <PrivateRoute isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
-            <ActualizarItems />
-          </PrivateRoute>
-        } />
-
+            <PrivateRoute 
+              isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
+              <ActualizarItems />
+            </PrivateRoute>
+          } />
           <Route path="/actualizarCategorias/:id" element={
-            <PrivateRoute isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
-            <ActualizarCategorias />
-          </PrivateRoute>
-        } />
-        
+            <PrivateRoute 
+              isLoggedIn={isLoggedIn} isAdmin={isAdmin}>
+              <ActualizarCategorias />
+            </PrivateRoute>
+          } />
         </Routes>
         <Footer />
       </div>

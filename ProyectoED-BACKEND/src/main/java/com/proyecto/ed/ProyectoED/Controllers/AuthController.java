@@ -36,7 +36,7 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
         try {
             if (!verifyCaptcha(request.getCaptchaToken())) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(null, null, null, null, null, null, null));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(null, null, null, null, null, null, null,null));
             }
 
             AuthResponse response = authService.login(request.getEmail(), request.getPassword());
@@ -46,7 +46,7 @@ public class AuthController {
             System.out.println("email:" + response.getEmail());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse(null, null, null, null, null, null, null));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse(null, null, null, null, null, null, null,null));
         }
     }
 

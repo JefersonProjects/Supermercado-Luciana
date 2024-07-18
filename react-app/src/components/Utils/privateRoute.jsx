@@ -2,8 +2,8 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 const PrivateRoute = ({ isLoggedIn, isAdmin, children }) => {
-    if (!isLoggedIn) {
-        return <Navigate to="/inicioSesion" />;
+    if (!isLoggedIn ) {
+        return <Navigate to="/" />;
     }
     if (!isAdmin) {
         return <Navigate to="/" />;

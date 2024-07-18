@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class AuthResponse {
     private String token;
     private String role;
+    private Long id;
     private String nombre;
 
     private String apellido;
@@ -20,9 +21,10 @@ public class AuthResponse {
     private String email;
 
     // Constructor, getters y setters
-    public AuthResponse(String token, String role, String nombre, String apellido, String dni, String telefono, String email) {
+    public AuthResponse(String token, String role, Long id,String nombre, String apellido, String dni, String telefono, String email) {
         this.token = token;
         this.role = role;
+        this.id=id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -55,6 +57,14 @@ public class AuthResponse {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNombre() {

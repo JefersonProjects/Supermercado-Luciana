@@ -14,7 +14,8 @@ const Carrito = ({ carrito, setCarrito, isLoggedIn }) => {
         telefono: userData?.telefono || '',
         email: userData?.email || '',
         metodoEnvio: 'Retiro en tienda',
-        direccion: ''
+        direccion: '',
+        idCliente: userData?.id || '' 
     });
     const navigate = useNavigate();
 
@@ -73,7 +74,7 @@ const Carrito = ({ carrito, setCarrito, isLoggedIn }) => {
             return;
         }
 
-        navigate(`/pagar-monto?total=${total}`);
+        navigate('/paypal-button', { state: { formData, carrito, total } });
     };
 
     const handleChange = (e) => {
@@ -142,6 +143,10 @@ const Carrito = ({ carrito, setCarrito, isLoggedIn }) => {
                         <h2>Detalles del Cliente</h2>
                         <form>
                             <div className="form-column">
+                            <div>
+                                    <label>Id del Usuario:</label>
+                                    <input type="text" name="nombre" value={formData.idCliente} readOnly />
+                                </div>
                                 <div>
                                     <label>Nombre:</label>
                                     <input type="text" name="nombre" value={formData.nombre} readOnly />

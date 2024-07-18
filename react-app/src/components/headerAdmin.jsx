@@ -29,7 +29,7 @@ const HeaderAdmin = ({ exitAdminMode }) => {
                         <Link to="/listClientes" className="nav-menu-link-luciana-Admin nav-link-luciana-Admin" onClick={handleLinkClick}>CLIENTES</Link>
                     </li>
                     <li className="nav-menu-item-luciana-Admin">
-                        <Link to="" className="nav-menu-link-luciana-Admin nav-link-luciana-Admin" onClick={handleLinkClick}>VENTAS</Link>
+                        <Link to="/listVentas" className="nav-menu-link-luciana-Admin nav-link-luciana-Admin" onClick={handleLinkClick}>VENTAS</Link>
                     </li>
                     <li className="nav-menu-item-luciana-Admin">
                         <Link to="#" onClick={exitAdminMode} className="nav-menu-link-luciana-Admin nav-link-luciana-Admin">SALIR DEL MODO ADMIN</Link>

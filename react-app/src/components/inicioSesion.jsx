@@ -24,8 +24,8 @@ const InicioSesion = ({ onLogin }) => {
         }
         try {
             const response = await AuthService.login({ email, password, captchaToken });
-            const { token, role, nombre, apellido, dni, telefono, email: userEmail } = response.data; // Cambiado para evitar conflicto de nombres
-            const user = { nombre, apellido, dni, telefono, email: userEmail };
+            const { token, role,id, nombre, apellido, dni, telefono, email: userEmail } = response.data; // Cambiado para evitar conflicto de nombres
+            const user = { id,nombre, apellido, dni, telefono, email: userEmail };
             onLogin(token, role, user);
             setMensaje('Inicio de sesión exitoso');
             navigate('/');
