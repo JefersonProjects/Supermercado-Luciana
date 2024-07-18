@@ -31,15 +31,22 @@ function App() {
     return savedCarrito ? JSON.parse(savedCarrito) : [];
   });
 
+  const [userData, setUserData] = useState(null);
+
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
+    const storedUserData = localStorage.getItem('userData');
     if (token && role === 'ADMIN') {
       setIsAdmin(true);
       setIsLoggedIn(true);
     } else if (token) {
       setIsLoggedIn(true);
+    }
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
     }
   }, []);
 
@@ -62,24 +69,28 @@ function App() {
 
     actualizarPreciosCarrito();
   }, []);
+
   useEffect(() => {
     localStorage.setItem('carrito', JSON.stringify(carrito));
   }, [carrito]);
 {/* ----------------------------------------------------------------------*/}
 
-  const handleLogin = (token, role) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('role', role);
-    if (role === 'ADMIN') {
+const handleLogin = (token, role, user) => {
+  localStorage.setItem('token', token);
+  localStorage.setItem('role', role);
+  localStorage.setItem('userData', JSON.stringify(user));
+  if (role === 'ADMIN') {
       setIsAdmin(true);
-    }
-    setIsLoggedIn(true);
-  };
+  }
+  setIsLoggedIn(true);
+  setUserData(user);
+};
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
     localStorage.removeItem('carrito');
+    localStorage.removeItem('userData');
     setIsAdmin(false);
     setIsLoggedIn(false);
     setAdminMode(false);
@@ -101,7 +112,7 @@ function App() {
       return [...prevCarrito, { ...producto, stock: 1 }];
     });
   };
-
+  console.log(userData)
   return (
     <Router>
       <ScrollToTop />
@@ -120,8 +131,9 @@ function App() {
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/cuenta" element={<MiCuenta handleLogout={handleLogout} />} />
           <Route path="/products" element={<Products carrito={carrito} agregarAlCarrito={agregarAlCarrito} />} />
-          <Route path="/carrito" element={<Carrito carrito={carrito} setCarrito={setCarrito} isLoggedIn={isLoggedIn} />} />
-          <Route path='/pagar-monto' element={<PaypalButton />} />
+          <Route path="/carrito" element={<Carrito carrito={carrito} setCarrito={setCarrito} isLoggedIn={isLoggedIn} userData={userData} />} />
+          <Route path='/pagar-monto' element={<PaypalButton setCarrito={setCarrito} />} />
+
           {/* rutas admin */}
           <Route path="/listClientes" element={
             <PrivateRoute 

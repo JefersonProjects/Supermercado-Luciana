@@ -56,7 +56,8 @@ public class AuthService {
         }
 
         String token = jwtUtil.generateToken(usuario);
-        return new AuthResponse(token, usuario.getRole().name());
+        return new AuthResponse(token, usuario.getRole().name(), usuario.getNombre(),
+                usuario.getApellido(), usuario.getDni(), usuario.getTelefono(), usuario.getEmail());
     }
 
     private boolean verifyPassword(String rawPassword, String hashedPassword) {
@@ -77,15 +78,6 @@ public class AuthService {
         String token = jwtUtil.generateToken(cliente);
         return new AuthResponse(token,cliente.getRole().name());
 
-    }
-
-    public AuthResponse registerAdministrador(RegisterRequest request) {
-        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-        String hash = argon2.hash(1, 1024, 1, request.getPassword());
-        Administrador administrador = new Administrador(null, request.getNombre(), request.getApellido(), request.getDni(), request.getTelefono(), request.getEmail(), hash, Role.ADMIN);
-        administradorRepository.registrarAdministrador(administrador);
-        String token = jwtUtil.generateToken(administrador);
-        return new AuthResponse(token,administrador.getRole().name());
     }
 
 }

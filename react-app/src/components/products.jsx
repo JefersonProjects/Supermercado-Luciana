@@ -174,13 +174,14 @@ const Productos = ({ carrito = [], agregarAlCarrito }) => {
                             <div className="catalogo-item" key={producto.id}>
                                 <img src={`data:image/png;base64,${producto.imagen}`} alt={producto.nombre} />
                                 <h3>{producto.nombre}</h3>
+                                <hr className="linea-separadora" />
                                 <p>{producto.descripcion}</p>
                                 {carrito.some(item => item.id === producto.id) ? (
                                     <p>Producto ya está en el carrito</p>
                                 ) : (
-                                    <button onClick={() => handleAgregarAlCarrito(producto)}>Agregar al carrito</button>
+                                    <button onClick={() => handleAgregarAlCarrito(producto)}>Agregar al Carro</button>
                                 )}
-                                <h4>S/ {producto.precio}</h4>
+                                <h4> Precio: S/{producto.precio}</h4>
                             </div>
                         ))}
                     </div>

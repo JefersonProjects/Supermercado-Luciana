@@ -1,0 +1,42 @@
+.mi-cuenta-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.mi-cuenta-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.mi-cuenta-info {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.mi-cuenta-buttons {
+    margin-top: 20px; /* Espacio entre los botones y la información */
+}
+
+.mi-cuenta-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px; /* Espacio entre los botones */
+}
+
+
+@media (max-width: 600px) {
+    .mi-cuenta-container {
+        max-width: 100%;
+        padding: 10px;
+    }
+}

@@ -24,10 +24,11 @@ const InicioSesion = ({ onLogin }) => {
         }
         try {
             const response = await AuthService.login({ email, password, captchaToken });
-            const { token, role } = response.data;
-            onLogin(token, role);
+            const { token, role, nombre, apellido, dni, telefono, email: userEmail } = response.data; // Cambiado para evitar conflicto de nombres
+            const user = { nombre, apellido, dni, telefono, email: userEmail };
+            onLogin(token, role, user);
             setMensaje('Inicio de sesión exitoso');
-            navigate('/'); 
+            navigate('/');
         } catch (error) {
             if (error.response && error.response.status === 401) {
                 setMensaje('Correo o contraseña incorrectas. Verifique sus credenciales.');
@@ -68,3 +69,5 @@ const InicioSesion = ({ onLogin }) => {
 };
 
 export default InicioSesion;
+
+

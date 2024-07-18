@@ -35,6 +35,10 @@ public class ClienteService {
         return clienteRepository.registrarCliente(cliente);
     }
 
+    public Cliente findByEmail(String email){
+        return clienteRepository.findByEmail(email);
+    }
+
     public Cliente modificarCliente(Cliente cliente) {
         //Encriptamos la contraseña//
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);

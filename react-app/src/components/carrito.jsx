@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import ProductoService from '../services/productoService';
 import '../assets/css/carrito.css';
-import { Link, useNavigate } from 'react-router-dom';
-import PaypalButton from './PaypalButton/paypal';
+import { useNavigate } from 'react-router-dom';
 
 const Carrito = ({ carrito, setCarrito, isLoggedIn }) => {
     const [productosActuales, setProductosActuales] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [userData, setUserData] = useState(() => JSON.parse(localStorage.getItem('userData')));
+    const [formData, setFormData] = useState({
+        nombre: userData?.nombre || '',
+        apellido: userData?.apellido || '',
+        dni: userData?.dni || '',
+        telefono: userData?.telefono || '',
+        email: userData?.email || '',
+        metodoEnvio: 'Retiro en tienda',
+        direccion: ''
+    });
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -52,12 +62,30 @@ const Carrito = ({ carrito, setCarrito, isLoggedIn }) => {
     const total = carrito.reduce((acc, producto) => acc + producto.precio * producto.stock, 0).toFixed(2);
 
     const handleProceedToCheckout = () => {
-        if (isLoggedIn) {
-            navigate(`/pagar-monto?total=${total}`);
-        } else {
+        if (!isLoggedIn) {
             alert("Debe de iniciar sesión para comprar");
             navigate('/inicioSesion');
+            return;
         }
+
+        if (!formData.telefono || (formData.metodoEnvio === 'Delivery' && !formData.direccion)) {
+            setShowModal(true);
+            return;
+        }
+
+        navigate(`/pagar-monto?total=${total}`);
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
     };
 
     return (
@@ -65,7 +93,7 @@ const Carrito = ({ carrito, setCarrito, isLoggedIn }) => {
             <div className="carrito-header">
                 <a href="#" className="carrito-titulo">DETALLE DE LA COMPRA</a>
             </div>
-            <h2 className="carrito-subtitulo">Listado de Productos Adquiridos</h2>
+            <h2 className="carrito-subtitulo">Listado de Productos Agregados a tu Carrito</h2>
             <table className="carrito-tabla">
                 <thead>
                     <tr>
@@ -108,18 +136,67 @@ const Carrito = ({ carrito, setCarrito, isLoggedIn }) => {
             <div className="carrito-total">
                 <h2>Monto total: S/. {total}</h2>
             </div>
-            <div className="carrito-pagar">
-                <button className="btn" onClick={handleProceedToCheckout}>Procesar Compra</button>
-            </div>
+            {carrito.length > 0 && (
+                <>
+                    <div className="carrito-form">
+                        <h2>Detalles del Cliente</h2>
+                        <form>
+                            <div className="form-column">
+                                <div>
+                                    <label>Nombre:</label>
+                                    <input type="text" name="nombre" value={formData.nombre} readOnly />
+                                </div>
+                                <div>
+                                    <label>Apellido:</label>
+                                    <input type="text" name="apellido" value={formData.apellido} readOnly />
+                                </div>
+                                <div>
+                                    <label>DNI:</label>
+                                    <input type="text" name="dni" value={formData.dni} readOnly />
+                                </div>
+                            </div>
+                            <div className="form-column">
+                                <div>
+                                    <label>Teléfono:</label>
+                                    <input type="text" name="telefono" value={formData.telefono} onChange={handleChange} />
+                                </div>
+                                <div>
+                                    <label>Email:</label>
+                                    <input type="text" name="email" value={formData.email} readOnly />
+                                </div>
+                                <div className="envio-container">
+                                    <div>
+                                        <label>Método de Envío:</label>
+                                        <select name="metodoEnvio" value={formData.metodoEnvio} onChange={handleChange}>
+                                            <option value="Retiro en tienda">Retiro en tienda</option>
+                                            <option value="Delivery">Delivery</option>
+                                        </select>
+                                    </div>
+                                    {formData.metodoEnvio === 'Delivery' && (
+                                        <div>
+                                            <label>Dirección:</label>
+                                            <input type="text" name="direccion" value={formData.direccion} onChange={handleChange} />
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="carrito-pagar">
+                        <button className="btn" onClick={handleProceedToCheckout}>Procesar Compra</button>
+                    </div>
+                </>
+            )}
+            {showModal && (
+                <div className="modal-carrito">
+                    <div className="modal-content-carrito">
+                        <span className="close" onClick={closeModal}>&times;</span>
+                        <p>Por favor complete todos los campos requeridos.</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
 export default Carrito;
-
-
-
-
-
-
-

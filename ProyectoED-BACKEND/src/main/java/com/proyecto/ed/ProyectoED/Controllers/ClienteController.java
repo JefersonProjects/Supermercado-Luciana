@@ -1,5 +1,6 @@
 package com.proyecto.ed.ProyectoED.Controllers;
 import com.proyecto.ed.ProyectoED.Services.ClienteService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import com.proyecto.ed.ProyectoED.Models.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173/")
 @RestController
 @RequestMapping("/api/clientes")
-
 public class ClienteController {
 
 
@@ -22,6 +22,16 @@ public class ClienteController {
     @GetMapping
     public List<Cliente> listarClientes() {
         return serviceCliente.listarClientes();
+    }
+
+    @GetMapping("/email")
+    public ResponseEntity<Cliente> buscarPorEmail(@RequestParam String email){
+        Cliente cliente = serviceCliente.findByEmail(email);
+        if (cliente != null){
+            return ResponseEntity.ok(cliente);
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @GetMapping("/dni/{dni}")

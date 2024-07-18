@@ -7,6 +7,9 @@ class ClienteService{
     getAllClientes(){
         return axios.get(API_URL);
     }
+    findByEmail(email) {
+        return axios.get(`${API_URL}/email?email=${email}`);
+    }
     createCliente(cliente){
         return axios.post(API_URL,cliente);
     }
